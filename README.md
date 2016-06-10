@@ -5,10 +5,8 @@ A modified version of Babel's [AMD Module plugin](https://github.com/babel/babel
 ```javascript
 import Foo from 'foo';
 
-export default class MyClass {
-  constructor() {
-    this.foo = new Foo();
-  }
+export default {
+  myFoo: new Foo('bar')
 }
 ```
 
