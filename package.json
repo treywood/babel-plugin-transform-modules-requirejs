@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-transform-modules-requirejs",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Modified babel-plugin-transform-modules-amd for RequireJS",
   "main": "lib/index.js",
   "scripts": {
