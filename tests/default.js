@@ -1,5 +1,5 @@
-import Marionette from 'marionette';
+import Foo from 'foo';
 
-export default Marionette.ItemView.extend({
-
-});
+export default {
+  myFoo: new Foo('bar')
+}

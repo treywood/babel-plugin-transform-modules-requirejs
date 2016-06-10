@@ -123,6 +123,7 @@ export default function ({ types: t }) {
           }));
 
           let moduleName = this.getModuleName();
+          console.log(moduleName);
           if (moduleName) moduleName = t.stringLiteral(moduleName);
 
           let { node } = path;
