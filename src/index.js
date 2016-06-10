@@ -26,6 +26,11 @@ export default function ({ types: t }) {
     return true;
   }
 
+  function isDefineCall(path) {
+    return path.isCallExpression() &&
+      path.get("callee").isIdentifier({ name: "define" });
+  }
+
   let amdVisitor = {
     ReferencedIdentifier({ node, scope }) {
       if (node.name === "exports" && !scope.getBinding("exports")) {
@@ -58,6 +63,14 @@ export default function ({ types: t }) {
     },
   };
 
+  let defineHunter = {
+    CallExpression(path) {
+      if (isDefineCall(path)) {
+        this.hasDefine = true;
+      }
+    }
+  };
+
   return {
     inherits: require("babel-plugin-transform-es2015-modules-commonjs"),
 
@@ -72,13 +85,22 @@ export default function ({ types: t }) {
       this.hasExports = false;
       this.hasModule = false;
       this.hasDefault = false;
+      this.hasDefine = false;
     },
 
     visitor: {
       Program: {
+
         enter(path) {
           if (this.ran) return;
-          this.ran = true;
+
+          let [top] = path.get("body"), exp;
+          if (top.isExpressionStatement() && (exp = top.get("expression"))) {
+            if (exp.isCallExpression() && exp.get("callee").isIdentifier({ name: "define" })) {
+              this.hasDefine = true;
+              return;
+            }
+          }
 
           for (let p of path.get("body")) {
             if (p.isExportDefaultDeclaration()) {
@@ -86,7 +108,11 @@ export default function ({ types: t }) {
             }
           }
         },
+
         exit(path) {
+          if (this.ran || this.hasDefine) return;
+          this.ran = true;
+
           path.traverse(amdVisitor, this);
 
           let params = this.sources.map((source) => source[0]);
