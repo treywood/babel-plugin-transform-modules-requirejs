@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-transform-modules-requirejs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Modified babel-plugin-transform-modules-amd for RequireJS",
   "main": "lib/index.js",
   "scripts": {
@@ -24,9 +24,11 @@
     "url": "https://github.com/treywood/babel-plugin-transform-modules-requirejs/issues"
   },
   "homepage": "https://github.com/treywood/babel-plugin-transform-modules-requirejs#readme",
+  "dependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.8.0",
+  }
   "devDependencies": {
     "babel-cli": "^6.9.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-template": "^6.9.0"
   }
