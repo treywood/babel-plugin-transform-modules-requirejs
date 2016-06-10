@@ -123,7 +123,8 @@ export default function ({ types: t }) {
           }));
 
           let moduleName = this.getModuleName();
-          if (moduleName) moduleName = t.stringLiteral(moduleName);
+          if (moduleName && moduleName !== "NONE") moduleName = t.stringLiteral(moduleName);
+          else moduleName = null;
 
           let { node } = path;
 
